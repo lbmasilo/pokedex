@@ -1,0 +1,214 @@
+basePath: /
+definitions:
+  models.Abilities:
+    properties:
+      ability:
+        $ref: '#/definitions/models.Ability'
+    type: object
+  models.Ability:
+    properties:
+      name:
+        type: string
+    type: object
+  models.Forms:
+    properties:
+      name:
+        type: string
+    type: object
+  models.GameIndices:
+    properties:
+      game_index:
+        type: integer
+      version:
+        $ref: '#/definitions/models.Version'
+    type: object
+  models.Move:
+    properties:
+      name:
+        type: string
+    type: object
+  models.MoveLearnMethod:
+    properties:
+      name:
+        type: string
+    type: object
+  models.Moves:
+    properties:
+      move:
+        $ref: '#/definitions/models.Move'
+      version_group_details:
+        items:
+          $ref: '#/definitions/models.VersionGroupDetails'
+        type: array
+    type: object
+  models.PokemonInfo:
+    properties:
+      abilities:
+        items:
+          $ref: '#/definitions/models.Abilities'
+        type: array
+      base_experience:
+        type: integer
+      forms:
+        items:
+          $ref: '#/definitions/models.Forms'
+        type: array
+      game_indices:
+        items:
+          $ref: '#/definitions/models.GameIndices'
+        type: array
+      height:
+        type: integer
+      id:
+        type: integer
+      moves:
+        items:
+          $ref: '#/definitions/models.Moves'
+        type: array
+      name:
+        type: string
+      order:
+        type: integer
+      species:
+        $ref: '#/definitions/models.Species'
+      sprites:
+        $ref: '#/definitions/models.Sprites'
+      stats:
+        items:
+          $ref: '#/definitions/models.Stats'
+        type: array
+      types:
+        items:
+          $ref: '#/definitions/models.Types'
+        type: array
+      weight:
+        type: integer
+    type: object
+  models.Pokemons:
+    properties:
+      name:
+        type: string
+      sprites:
+        $ref: '#/definitions/models.Sprites'
+    type: object
+  models.Species:
+    properties:
+      name:
+        type: string
+    type: object
+  models.Sprites:
+    properties:
+      back_default:
+        type: string
+      front_default:
+        type: string
+    type: object
+  models.Stat:
+    properties:
+      name:
+        type: string
+    type: object
+  models.Stats:
+    properties:
+      base_stat:
+        type: integer
+      effort:
+        type: integer
+      stat:
+        $ref: '#/definitions/models.Stat'
+    type: object
+  models.Type:
+    properties:
+      name:
+        type: string
+    type: object
+  models.Types:
+    properties:
+      type:
+        $ref: '#/definitions/models.Type'
+    type: object
+  models.Version:
+    properties:
+      name:
+        type: string
+    type: object
+  models.VersionGroup:
+    properties:
+      name:
+        type: string
+    type: object
+  models.VersionGroupDetails:
+    properties:
+      level_learned_at:
+        type: integer
+      move_learn_method:
+        $ref: '#/definitions/models.MoveLearnMethod'
+      version_group:
+        $ref: '#/definitions/models.VersionGroup'
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Pokedex api with golang.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Pokedex API
+  version: "1.0"
+paths:
+  /api/v1/pokemon/{name}:
+    get:
+      consumes:
+      - application/json
+      description: Get pokemon's information
+      parameters:
+      - description: pokemon name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.PokemonInfo'
+            type: array
+      summary: Get pokemon's information
+      tags:
+      - Pokemon's Info
+  /api/v1/pokemons:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of pokemons
+      parameters:
+      - description: Number of pokemons
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Number of pokemons to exclude
+        in: query
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Pokemons'
+            type: array
+      summary: Get a list of pokemons
+      tags:
+      - List of Pokemons
+swagger: "2.0"
